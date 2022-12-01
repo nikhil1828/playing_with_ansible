@@ -1,6 +1,34 @@
 ---
+- name: install dependencies
+  apt:
+    name: "{{item}}"
+    state: present
+    update_cache: yes
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+- name: add GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+- name: ensure docker registry is available
+  apt_repository: repo='deb https://download.docker.com/linux/ubuntu bionic stable' state=present
 - name: install docker
-  apt:  name=nginx state=latest update_cache=yes  
-  notify: restart-docker
+  apt:
+    name: "{{item}}"
+    state: latest
+    update_cache: yes
+  loop:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
 - name:   restart docker
-  service: name=nginx state=restarted
+  service: name={{service2}} state=restarted
+- name: adding ubuntu to docker group
+  user:
+    name: ubuntu
+    groups: docker
+    append: yes

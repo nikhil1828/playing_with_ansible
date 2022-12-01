@@ -1,6 +1,6 @@
 ---
 - name: install nginx
-  apt: name=nginx state=latest update_cache=yes  
+  apt: name={{service1}} state=latest update_cache=true
   notify: restart-nginx
 - name:   restart nginx 
-  service: name=nginx state=restarted
+  service: name={{service1}} state=restarted

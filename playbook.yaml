@@ -3,7 +3,7 @@
   hosts: all
   become: yes
   become_user: root
-  connection: ssh
+  # connection: ssh
   roles:
-    - nginx
+    # - nginx
     - docker
