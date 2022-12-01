@@ -1,0 +1,6 @@
+---
+- name: install docker
+  apt:  name=nginx state=latest update_cache=yes  
+  notify: restart-docker
+- name:   restart docker
+  service: name=nginx state=restarted
